@@ -50,7 +50,14 @@
         </tr>
     </table>
     <div>
-        <button v-on:click="debug(total,num1,op,scientific)">Debug</button>
+        <div>
+            <p> <strong> This calculator only supports 2-variable calculations. <br/><br/></strong> If you encounter an unwanted problem,
+            click the Debug button below to find out what's wrong.</p>
+        </div>
+        <button v-on:click="debug(total,num1,op,scientific,showMessage), showMessage=message(showMessage)">Debug</button>
+        <div v-if="showMessage==true">
+            <p>Check your console!<br/> Click the button again to clear your console.</p>
+        </div>
     </div>
 </div>
 
@@ -69,7 +76,8 @@ export default {
             total: 0,
             op: "",
             num1: "",
-            scientific: false
+            scientific: false,
+            showMessage: false
         }
     },
     methods :{
@@ -177,9 +185,21 @@ export default {
                 return total;
             }
         },
-        debug: (num1,total,op,scientific)=>{
-            console.table([num1,total,op]);
-            console.log(scientific)
+        debug: (num1,total,op,scientific,showMessage)=>{
+            if (showMessage){
+                console.clear();
+            }
+            else{
+                var objectDebug = {
+                    Total_Number : total,
+                    Second_Number : num1,
+                    Operation: op,
+                    Is_Scientific : scientific,
+                }
+                console.table(objectDebug);                  
+            }
+              
+
         },
         switchScientific: (scientific)=>{
             switch(scientific){
@@ -200,6 +220,14 @@ export default {
                     number=number*temp_number;                    
                 }
                 return number;
+            }
+        },
+        message: (showMessage)=>{
+            if (showMessage){
+                return false;
+            }
+            else{
+                return true;
             }
         }
 
@@ -249,6 +277,22 @@ table{
 }
 
 button{
-    margin-top:1%;
+    font-family: 'Lato', sans-serif ;
+    margin-top:0.5%;
+    background-color: #f57e00;
+    border: 2px solid #f57e00;
+    color: black;
+    font-size:1rem;
+    padding: 10px 16px;
+    text-align: center;
+    display: inline-block;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius:5%;
+}
+button:hover{
+    background-color: white;
+    color:#f57e00;
+    border: 2px solid #f57e00;
 }
 </style>

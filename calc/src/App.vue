@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <!--<Nav/>-->
-    <HelloWorld/>
+    <Nav/>
+    <HelloWorld />
     <Calc />
   </div>
 </template>
@@ -9,13 +9,13 @@
 <script>
 import HelloWorld from './components/HelloWorld.vue'
 import Calc from './components/calc.vue'
-//import Nav from './components/nav.vue'
+import Nav from './components/nav.vue'
 export default {
   name: 'App',
   components: {
     HelloWorld,
     Calc,
-    /*Nav*/
+    Nav
   }
 }
 </script>
@@ -36,6 +36,7 @@ body {
 	animation: gradient 15s ease infinite;
   padding:0px;
   margin: 0 !important;
+
 }
 
 @keyframes gradient {

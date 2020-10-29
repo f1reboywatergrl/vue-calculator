@@ -1,14 +1,9 @@
 <template>
 <div>
     <nav class="navbar">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <svg src="../assets/github-brands.svg"></svg>
-                    <span class="link-text">Cats</span>
-                </a>
-            </li>
-        </ul>
+        <a href="https://www.linkedin.com/in/vincentius-samuel/" target="_blank"><font-awesome-icon :icon="['fab', 'linkedin-in']" size="lg" /></a>
+        <a href="https://github.com/f1reboywatergrl" target="_blank"><font-awesome-icon :icon="['fab', 'github']" size="lg" /></a>
+        <a href="https://github.com/f1reboywatergrl/vue-calculator" target="_blank"><font-awesome-icon :icon="['fas', 'code']" size="lg" /></a> 
     </nav>
 </div>
 </template>
@@ -17,25 +12,33 @@
 export default {
     name: 'Nav'
 }
+
 </script>
 
 <style scoped>
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
-:root{
-    --text-primary: #b6b6b6;
-    --text-secondary: #ececec;
-    --bg-primary: #23232e;
-    --bg-secondary: #141418;
-}
-main{
-    margin-left: 5rem;
-    padding:1rem;
+.navbar{
+    width: 100%;
+    background-color: #23232e;
+    color: #b6b6b6;
+    display:flex;
+    justify-content:space-between;
+    overflow:hidden;
 }
 
-.navbar{
-    left: 5rem;
-    height: 100vh;
-    position: fixed;
-    background-color: var(--bg-primary);
+.navbar a{
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    transition-duration: 0.3s;
 }
+
+.navbar a:hover{
+    background-color: #ddd;
+    color: black;
+}
+
 </style>
