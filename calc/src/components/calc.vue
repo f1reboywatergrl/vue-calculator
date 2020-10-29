@@ -3,17 +3,17 @@
     <table>
         <tr>
             <th v-if="scientific==false" colspan="4" v-on:click="total++">{{total}} {{op}}
-                <span v-if="num1!=0">{{num1}}</span>
+                <span v-if="num1!=''">{{num1}}</span>
             </th>
             <th v-else colspan="5" v-on:click="total++">{{total}} {{op}}
-                <span v-if="num1!='0'">{{num1}}</span>
+                <span v-if="num1!=''">{{num1}}</span>
             </th>
         </tr>
         <tr>
             <td v-if="scientific==false" v-on:click="scientific=switchScientific(scientific)">e π <br/> ln √</td>
             <td v-if="scientific==true" v-on:click="scientific=switchScientific(scientific)">+ - <br/>* /</td>
             <td v-on:click="total=0,num1=0,op=''">AC</td>
-            <td v-on:click="total=del(total)">DEL</td>
+            <td v-on:click="total=del(total,op,num1)[0], op=del(total,op,num1)[1],num1=del(total,op,num1)[2]">DEL</td>
             <td v-if="scientific==false" v-on:click="op='/'">/</td>
             <td v-if="scientific==true" v-on:click="total=set(total,Math.E,op)">e</td>
             <td v-if="scientific==true" v-on:click="op='log'">log</td>
@@ -68,20 +68,35 @@ export default {
         return{
             total: 0,
             op: "",
-            num1: "0",
+            num1: "",
             scientific: false
         }
     },
     methods :{
-        del: function(number){
+        del: function(number,op,num1){
             var temp = number.toString();
-            if(temp.length==1 || (temp.length==2 && temp.includes('-'))){
-                return 0;
+            var temp_num1 = num1.toString();
+            if (op=="" && num1==""){
+                if(temp.length==1 || (temp.length==2 && temp.includes('-'))){
+                    temp=0;
+                }
+                else{
+                    temp = temp.substring(0, temp.length-1);                
+                }
             }
-            else{
-                temp = temp.substring(0, temp.length-1);
-                return Number(temp);                
+            else if (op!="" && num1==""){
+                op=""
             }
+            else if (number!="0" && op!=""){
+                if(temp_num1.length==1 || (temp_num1.length==2 && temp_num1.includes('-'))){
+                    temp_num1="";
+                }
+                else{
+                    temp_num1 = temp_num1.substring(0, temp_num1.length-1);                
+                }                
+            }
+            return [temp,op,temp_num1];
+
 
         },
         equal: function(total,num1,op){
@@ -90,49 +105,49 @@ export default {
             switch(op){
                 case "+":
                     this.op="";
-                    this.num1='0';
+                    this.num1='';
                     return total+temp;
                 case "/":
                     this.op="";
-                    this.num1='0';
+                    this.num1='';
                     return total/temp;
                 case "-":
                     this.op="";
-                    this.num1='0';
+                    this.num1='';
                     return total-temp;
                 case "*":
                     this.op="";
-                    this.num1='0';
+                    this.num1='';
                     return total*temp;
                 case "sqrt":
                     this.op="";
-                    this.num1='0';
+                    this.num1='';
                     return Math.sqrt(total);
                 case "sqr":
                     this.op="";
-                    this.num1='0';
+                    this.num1='';
                     return Math.pow(total,2);
                 case "%":
                     this.op="";
-                    this.num1='0';
+                    this.num1='';
                     return total%temp;
                 case "^":
                     this.op="";
-                    this.num1='0';
+                    this.num1='';
                     return Math.pow(total,temp); 
                 case "log":
                     this.op="";
-                    this.num1='0';
+                    this.num1='';
                     return Math.log(temp)/Math.log(total);
                 case "ln":
                     this.op="";
-                    this.num1='0';
+                    this.num1='';
                     return Math.log(total);                                                                            
             }
         },
         setTempNumber: function(number){
             var new_number = number.toString();            
-            if (this.num1=="0"){
+            if (this.num1==""){
                 this.num1=number;
             }
             else if(number=='.' && !new_number.includes('.')){
@@ -149,7 +164,7 @@ export default {
                 return number;
             }
             /* Adding decimal point*/
-            else if(number=='.' && !new_number.includes('.')){
+            else if(number=='.' && !new_number.includes('.') && op==""){
                 new_number+='.';
                 return (new_number);                
             }            
@@ -165,8 +180,6 @@ export default {
         debug: (num1,total,op,scientific)=>{
             console.table([num1,total,op]);
             console.log(scientific)
-            var temp="12.0";
-            console.log(Number(temp)+3.77)
         },
         switchScientific: (scientific)=>{
             switch(scientific){

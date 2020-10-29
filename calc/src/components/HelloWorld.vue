@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>Kalku Yo</h1>
+    <h1>2-Variable Scientific Calculator</h1>
   </div>
 </template>
 
