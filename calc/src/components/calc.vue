@@ -178,7 +178,7 @@ export default {
             }            
             else if (op==""){
                 new_number+=number;
-                return Number(new_number);
+                return (new_number);
             }
             else{
                 this.setTempNumber(number);
